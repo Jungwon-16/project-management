@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project! </title>
+
+    <!-- style -->
+    <script type="text/javascript">
+        function wirte_form() {
+            let title = $('#title').val();
+            let start_period = $('#start_period').val();
+            let end_period = $('#end_period').val();
+            let task = $('#task').val();
+            let member = $('#member').val();
+
+            if (title == '') {
+                alert('프로젝트명을 입력해주세요!');
+                $('#title').focus();
+                return;
+            } else if (start_period == '') {
+                alert('프로젝트 기간을 입력해주세요!');
+                $('#start_period').focus();
+                return;
+            } else if (end_period == '') {
+                alert('프로젝트 기간을 입력해주세요!');
+                $('#review').focus();
+                return;
+            } else if (task == '') {
+                alert('주요 업무를 입력해주세요!');
+                $('#task').focus();
+                return;
+            } else if (member == '') {
+                alert('프로젝트 참여자를 입력해주세요!');
+                $('#member').focus();
+                return;
+            }
+        }
+
+        function plus_btn() {
+            let temp_html = `<div class="input-group is-invalid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="validatedInputGroupPrepend">1</span>
+                                </div>
+                                <input type="text" class="form-control" id="task">
+                                <div class="input-group-append">
+                                    <span onclick="minus_btn()" class="btn btn-outline-secondary" type="button">-</span>
+                                </div>
+                                <div class="input-group-append">
+                                    <span onclick="plus_btn()" class="btn btn-outline-secondary" type="button">+</span>
+                                </div>
+                            </div>`;
+            $('#task_box').append(temp_html);
+        }
+
+        function minus_btn() {
+
+        }
+
+        function regi_btn(member) {
+            let temp_html = `<button type="button" class="btn btn-dark" style="margin-left:10px; font-size: 13px;">${member} X</button>`
+            $('#member_box').append(temp_html);
+        }
+
+    </script>
+
+    <style type="text/css">
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .layout {
+            width: 960px;
+            margin: auto;
+        }
+
+        .page_title {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+
+        #head_title {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .page_content {
+            width: 900px;
+            margin: auto;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .form_layout {
+            width: 830px;
+            margin: auto;
+        }
+
+        #page_btn {
+            width: 100px;
+            font-weight: 600;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+    <div class="layout">
+        <div class="page_title">
+            <span class="badge badge-primary" id="head_title">Create New
+                PJT</span>
+        </div>
+
+        <div class="page_content jumbotron" style="grid-auto-row">
+            <form class="form_layout">
+                <div class="form-group1">
+                    <label for="formGroupExampleInput">1. Project Title</label>
+                    <input type="text" class="form-control" id="title">
+                </div>
+                <div class="form-group2" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">2. Project Period</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="start_period" placeholder="시작일(yyyy.mm.dd)"
+                                maxlength="10">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" id="end_period" placeholder="완료일(yyyy.mm.dd)"
+                                maxlength="10">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group3" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">3. Major Task</label>
+                    <div id="task_box" class="input-group is-invalid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">1</span>
+                        </div>
+                        <input type="text" class="form-control" id="task">
+                        <div class="input-group-append">
+                            <span onclick="plus_btn()" class="btn btn-outline-secondary" type="button">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group4" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">4. Project Member</label>
+                    <div class="input-group is-invalid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">1</span>
+                        </div>
+                        <input type="text" class="form-control" id="member">
+                        <div class="input-group-append">
+                            <span onclick="regi_btn()" class="btn btn-outline-secondary" type="button">Register</span>
+                        </div>
+                    </div>
+                    <div class="form-group4" style="margin-top:20px">
+                        <div id="member_box" style="margin-left:20px; margin-top:20px;">
+                            <button type="button" class="btn btn-dark" style="margin-left:10px; font-size: 13px;">김정원 X</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group5 text-center" style="margin-top:50px;">
+                    <button type="button" id="page_btn" class="btn btn-info">Next</button>
+                    <button onclick="wirte_form()" type="button" id="page_btn" class="btn btn-info"
+                        style="margin-left:20px;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
