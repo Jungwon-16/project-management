@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>My Project! </title>
+
+    <!-- Javascript -->
+    <script type="text/javascript">
+
+        let plus_num = 0;
+        function plus_btn() {
+            let task = $('#task').val();
+
+            if (task == '') {
+                alert('업무를 등록해주세요!');
+                $('#task').focus();
+                return;
+            }
+
+            plus_num += 1;
+
+            let plus_html = `<tr>
+                                <td>${plus_num}</td>
+                                <td>${task}</td>
+                                <td>
+                                    <button onclick="minus_btn()" class="btnDelete btn-outline-primary">Del</button>
+                                </td>
+                            </tr>`;
+            $('#task_box').append(plus_html);
+            $('#task').val('');
+        }
+
+        function minus_btn() {
+            $("#task_box").on('click', '.btnDelete', function () {
+                $(this).closest('tr').remove();
+            });
+        }
+
+
+        function regi_btn() {
+            let member = $('#member').val();
+
+            if (member == '') {
+                alert('담당자를 등록해주세요!');
+                $('#member').focus();
+                return;
+            }
+
+            let member_html = `<button type="button" onclick="member_btn()" class="btnDelete btn-dark" id="mem_list">${member}</button>`;
+            $('#member_box').append(member_html);
+            $('#member').val('');
+        }
+
+
+        function member_btn() {
+            $("#member_box").on('click', '.btnDelete', function () {
+                $(this).closest('button').remove();
+            });
+        }
+
+        function save_form() {
+            let pjt_title = $('#title').val();
+            let start_date = $('#start').val();
+            let end_date = $('#end').val();
+
+            if (pjt_title == '') {
+                alert('프로젝트명을 등록해주세요!');
+                $('#title').focus();
+                return;
+            } else if (start_date == '') {
+                alert('프로젝트 기간을 등록해주세요!');
+                $('#start_period').focus();
+                return;
+            } else if (end_date == '') {
+                alert('프로젝트 기간을 등록해주세요!');
+                $('#review').focus();
+                return;
+            }
+
+           
+            let task_box = $("#task_box").children()
+            for (let i = 1; i <= task_box.length; i++) {
+                console.log(task_box[i].querySelectorAll('td')[1].innerHTML)
+            }
+
+            // console 부분 이 내용도 오류 발생 → console.log(task_box[i].children[1].innerHTML)
+
+
+            let mem_box = $("#member_box").children()
+            for (let i = 0; i < mem_box.length; i++) {
+                console.log(mem_box[i].innerHTML)
+            }
+
+            //            $.ajax({
+            //                type: "POST",
+            //                url: "/new",
+            //                data: { },
+            //                success: function (response) {
+            //                    if (response['result'] == 'success') {
+            //                        alert(response['msg']);
+            //                        window.location.reload();
+            //                    }
+            //                }
+            //            })
+
+        }
+
+        function get_tasks() {
+            $
+        }
+
+
+    </script>
+
+
+    <!-- style -->
+    <style type="text/css">
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .layout {
+            width: 960px;
+            margin: auto;
+        }
+
+        .page_title {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+
+        #head_title {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .page_content {
+            width: 900px;
+            margin: auto;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .form_layout {
+            width: 830px;
+            margin: auto;
+        }
+
+        #mem_list {
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        #page_btn {
+            width: 100px;
+            font-weight: 600;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="layout">
+        <div class="page_title">
+            <span class="badge badge-primary" id="head_title">Create New
+                PJT</span>
+        </div>
+
+        <div class="page_content jumbotron" style="grid-auto-rows: auto;">
+            <form class="form_layout">
+                <div class="form-group1">
+                    <label for="formGroupExampleInput">1. Project Title</label>
+                    <input type="text" class="form-control" id="title">
+                </div>
+                <div class="form-group2" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">2. Project Period</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="start" placeholder="시작일(yyyy.mm.dd)"
+                                maxlength="10">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" id="end" placeholder="완료일(yyyy.mm.dd)"
+                                maxlength="10">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group3" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">3. Major Task</label>
+                    <div class="input-group is-invalid">
+                        <input type="text" class="form-control" id="task">
+                        <div class="input-group-append">
+                            <span onclick="plus_btn()" class="btn btn-outline-secondary" type="button">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table id="task_box" class="table" style="margin-top: 30px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="1" scope="col">No</th>
+                                <th width="500" scope="col">업무</th>
+                                <th width="1" scope="col"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="form-group4" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">4. Project Member</label>
+                    <div class="input-group is-invalid">
+                        <input type="text" class="form-control" id="member">
+                        <div class="input-group-append">
+                            <span onclick="regi_btn()" class="btn btn-outline-secondary" type="button">Register</span>
+                        </div>
+                    </div>
+                    <div class="form-group4" style="margin-top:20px">
+                        <div id="member_box" style="margin-left:20px; margin-top:20px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group5 text-center" style="margin-top:50px;">
+                    <button type="button" id="page_btn" class="btn btn-info">Next</button>
+                    <button onclick="save_form()" type="button" id="page_btn" class="btn btn-info"
+                        style="margin-left:20px;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
