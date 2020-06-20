@@ -18,22 +18,57 @@ def new():
 
 @app.route('/new', methods=['POST'])
 def pjt_list():
-    title = request.form['title']
-    start = request.form['start']
-    end = request.form['end']
-    task = request.form['task']
-    member = request.form['member']
+    pjt_title = request.form['pjt_title']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    m_task = request.form.getlist('m_task[]')
+    m_member = request.form.getlist('m_member[]')
 
     pjt = {
-        'title': title,
-        'start': start,
-        'end': end,
-        'task': task,
-        'member': member
+        'pjt_title': pjt_title,
+        'start_date': start_date,
+        'end_date': end_date,
+        'm_task': m_task,
+        'm_member': m_member
     }
 
     db.pjts.insert_one(pjt)
     return jsonify({'result': 'success', 'msg': '프로젝트 등록 완료!'})
+
+
+@app.route('/detail')
+def detail():
+    return render_template('detail.html')
+
+@app.route('/detail', methods=['POST'])
+def s_pjt_list():
+    pjt_title = request.form['pjt_title']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    s_task_list = request.form.getlist('s_task_list[]')
+    pjt_memo = request.form.getlist('pjt_memo')
+
+    s_pjt = {
+        'pjt_title': pjt_title,
+        'start_date': start_date,
+        'end_date': end_date,
+        's_task_list': s_task_list,
+        'pjt_memo': pjt_memo
+    }
+
+    db.pjts.insert_one(s_pjt)
+    return jsonify({'result': 'success', 'msg': '프로젝트 등록 완료!'})
+
+
+@app.route('/reg_pjt', methods=['GET'])
+def d_pjt_list():
+    pjts = list(db.pjts.find({},{'_id':0}))
+    return jsonify({'result': 'success', 'pjts': pjts})
+
+@app.route('/status')
+def status():
+    return render_template('status.html')
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

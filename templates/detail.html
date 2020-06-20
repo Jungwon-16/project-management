@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>My Project! </title>
+
+    <!-- Javascript -->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            initialize();
+        });
+
+        var m_pjts;
+        function initialize() {
+            $.ajax({
+                type: "GET",
+                url: "/reg_pjt",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        m_pjts = response['pjts'];
+                        for (let i = 0; i < m_pjts.length; i++) {
+                            detail_pjt(m_pjts[i]['pjt_title'])
+                        }
+                    } else {
+                        alert('프로젝트 정보를 받아오지 못했습니다');
+                    }
+                }
+            })
+        }
+        function detail_pjt(pjt_title) {
+            let title_html = `<option>${pjt_title}</option>`;
+            $('#title').append(title_html);
+        }
+
+        function get_pjt(pjt_title) {
+            for (let i = 0; i < m_pjts.length; i++) {
+                if (m_pjts[i].pjt_title == pjt_title) {
+                    return m_pjts[i];
+                }
+            }
+        }
+
+        function select_btn() {
+            let pjt_title = $('#title').val();
+            const selected_pjt = get_pjt(pjt_title);
+
+            let start_date = selected_pjt.start_date
+            let end_date = selected_pjt.end_date
+
+            let period_html = `<div class="col">
+                                    <type="text" id="start" class="form-control">${start_date}
+                               </div>
+                               <div class="col">
+                                    <type="text" id="end" class="form-control">${end_date}
+                               </div>`;
+            $('#pjt_period').append(period_html);
+
+            for (let i = 0; i < selected_pjt.m_task.length; i++) {
+                let m_tasks = selected_pjt.m_task[i];
+                let task_html = `<option>${m_tasks}</option>`
+                $('#task').append(task_html);
+            }
+
+            for (let i = 0; i < selected_pjt.m_member.length; i++) {
+                let m_mems = selected_pjt.m_member[i];
+                let mem_html = `<option>${m_mems}</option>`
+                $('#s_member').append(mem_html);
+            }
+        }
+
+
+        let plus_num = 0;
+        function plus_btn() {
+            let task = $('#task').val();
+            let s_task = $('#s_task').val();
+            let s_start_date = $('#s_start').val();
+            let s_end_date = $('#s_end').val();
+            let s_member = $('#s_member').val();
+
+            plus_num += 1;
+
+            let plus_html = `<tr>
+                                <td>${plus_num}</td>
+                                <td>${task}</td>
+                                <td>${s_task}</td>
+                                <td>${s_start_date}</td>
+                                <td>${s_end_date}</td>
+                                <td>${s_member}</td>
+                                <td>
+                                    <button onclick="minus_btn()" class="btnDelete btn-outline-primary">Del</button>
+                                </td>
+                            </tr>`;
+            $('#s_task_box').append(plus_html);
+            $('#task').val('');
+            $('#s_task').val('');
+            $('#s_start').val('');
+            $('#s_end').val('');
+            $('#s_member').val('담당자 선택');
+
+        }
+
+        function minus_btn() {
+            $("#s_task_box").on('click', '.btnDelete', function () {
+                $(this).closest('tr').remove();
+            });
+        }
+
+        function save_form() {
+            let pjt_title = $('#title').val();
+            let start_date = $('#start').val();
+            let end_date = $('#end').val();
+            let pjt_memo = $('#memo').val();
+
+            let s_task_list = get_s_tasks();
+
+            if (pjt_title == '') {
+                alert('프로젝트를 선택해주세요!');
+                $('#title').focus();
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/detail",
+                data: {
+                    pjt_title: pjt_title,
+                    start_date: start_date,
+                    end_date: end_date,
+                    s_task_list: s_task_list,
+                    pjt_memo: pjt_memo
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+
+        function get_s_tasks() {
+            let s_task = [];
+            let s_task_box = $("#s_task_box").children();
+            for (let i = 1; i <= s_task_box.length; i++) {
+                const table_title = $(`#s_task_box tr:nth-child(${i}) td`)[1];
+                const table_task = $(`#s_task_box tr:nth-child(${i}) td`)[2];
+                const table_start = $(`#s_task_box tr:nth-child(${i}) td`)[3];
+                const table_end = $(`#s_task_box tr:nth-child(${i}) td`)[4];
+                const table_mem = $(`#s_task_box tr:nth-child(${i}) td`)[5];
+
+                if (table_title, table_task, table_start, table_end, table_mem) {
+                    s_task.push(table_title, table_task, table_start, table_end, table_mem);
+                }
+            }
+            return s_task;
+        }
+
+
+    </script>
+
+    <!-- style -->
+    <style type="text/css">
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .layout {
+            width: 960px;
+            margin: auto;
+        }
+
+        .page_title {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+
+        #head_title {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .page_content {
+            width: 900px;
+            margin: auto;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .form_layout {
+            width: 830px;
+            margin: auto;
+        }
+
+        #page_btn {
+            width: 100px;
+            font-weight: 600;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="layout">
+        <div class="page_title">
+            <span class="badge badge-primary" id="head_title">Detailed PJT</span>
+        </div>
+
+        <div class="page_content jumbotron" style="grid-auto-rows: auto;">
+            <form class="form_layout">
+                <div class="form-group1">
+                    <label for="formGroupExampleInput">1. Project Name</label>
+                    <div class="input-group">
+                        <select class="custom-select" id="title" aria-label="Example select with button addon">
+                        </select>
+                        <div class="input-group-append">
+                            <button onclick="select_btn()" class="btn btn-outline-secondary"
+                                type="button">Select</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group2" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">2. Project Period</label>
+                    <div id="pjt_period" class="form-row">
+                    </div>
+                </div>
+                <div class="form-group3" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">3. Detailed Work</label>
+                    <div id="s_task_form" class="form-group5 text-center">
+                        <div class="input-group">
+                            <select class="custom-select" id="task" aria-label="Example select with button addon">
+                                <option selected>주요 업무 선택</option>
+                            </select>
+                        </div>
+                        <div class="input-group-prepend">
+                            <input type="text" class="form-control" id="s_task" placeholder="세부 내용">
+                            <input type="text" class="form-control" id="s_start" placeholder="시작일(yyyy.mm.dd)"
+                                maxlength="10">
+                            <input type="text" class="form-control" id="s_end" placeholder="마감일(yyyy.mm.dd)"
+                                maxlength="10">
+                            <div class="input-group">
+                                <select class="custom-select" id="s_member"
+                                    aria-label="Example select with button addon">
+                                    <option selected>담당자 선택</option>
+                                </select>
+                            </div>
+                            <span onclick="plus_btn()" class="btn btn-outline-secondary" type="button">+</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:40px">
+                        <table id="s_task_box" class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th width="1" scope="col">No</th>
+                                    <th width="220" scope="col">주요업무</th>
+                                    <th width="380" scope="col">세부내용</th>
+                                    <th width="100" scope="col">시작일</th>
+                                    <th width="100" scope="col">마감일</th>
+                                    <th width="100" scope="col">담당자</th>
+                                    <th width="1" scope="col"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group4" style="margin-top:50px">
+                    <label id="memo" for="formGroupExampleInput2">4. Memo</label>
+                    <div>
+                        <div class="input-group is-invalid">
+                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group5 text-center" style="margin-top:50px;">
+                    <button type="button" id="page_btn" class="btn btn-info">Next</button>
+                    <button onclick="save_form()" type="button" id="page_btn" class="btn btn-info"
+                        style="margin-left:20px;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

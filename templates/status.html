@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <title>My Project!</title>
+
+    <!-- style -->
+    <style type="text/css">
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .layout {
+            width: 960px;
+            margin: auto;
+        }
+
+        .page_title {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 10px;
+        }
+
+        #head_title {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .page_content {
+            width: 900px;
+            margin: auto;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .form_layout {
+            width: 830px;
+            margin: auto;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <div class="layout">
+        <div class="page_title">
+            <span class="badge badge-primary" id="head_title"> PJT Status</span>
+        </div>
+        <div class="page_content layout jumbotron" style="grid-auto-rows: auto;">
+            <form class="form_layout">
+                <div class="form-group1">
+                    <label for="formGroupExampleInput">1. Project Name</label>
+                    <div class="input-group">
+                        <select class="custom-select" aria-label="Example select with button addon">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Select</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group2" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">2. Project Period</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="PJT 시작일">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="PJT 종료일">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group3" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">3. Detail Work</label>
+                    <div>
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th width="170" scope="col">주요업무</th>
+                                    <th width="200" scope="col">세부업무</th>
+                                    <th width="100" scope="col">기한</th>
+                                    <th width="50" scope="col">담당자</th>
+                                    <th width="80" scope="col">현황</th>
+                                    <th width="50" scope="col">File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>Mark</td>
+                                    <td>
+                                        <select class="custom-select">
+                                            <option value="1">진행중</option>
+                                            <option value="2">완료</option>
+                                            <option value="3">예정</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon04">
+                                                <label class="custom-file-label" for="inputGroupFile04">File</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group4" style="margin-top:50px">
+                    <label for="formGroupExampleInput2">4. Memo</label>
+                    <div>
+                        <div class="input-group is-invalid">
+                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group5 text-center" style="margin-top:80px">
+                    <button type="button" class="btn btn-info" style="width: 80px;">Next</button>
+                    <button type="button" class="btn btn-info" style="width: 80px; margin-left:20px;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

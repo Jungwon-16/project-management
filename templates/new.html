@@ -60,7 +60,6 @@
             });
         }
 
-
         function regi_btn() {
             let member = $('#member').val();
 
@@ -101,36 +100,45 @@
                 return;
             }
 
-           
-            let task_box = $("#task_box").children()
-            for (let i = 1; i <= task_box.length; i++) {
-                console.log(task_box[i].querySelectorAll('td')[1].innerHTML)
+            let m_task = get_tasks();
+
+            let m_member = [];
+            let m_mem_box = $("#member_box").children()
+            for (let i = 0; i < m_mem_box.length; i++) {
+                const member = m_mem_box[i].innerHTML;
+                m_member.push(member);
             }
 
-            // console 부분 이 내용도 오류 발생 → console.log(task_box[i].children[1].innerHTML)
-
-
-            let mem_box = $("#member_box").children()
-            for (let i = 0; i < mem_box.length; i++) {
-                console.log(mem_box[i].innerHTML)
-            }
-
-            //            $.ajax({
-            //                type: "POST",
-            //                url: "/new",
-            //                data: { },
-            //                success: function (response) {
-            //                    if (response['result'] == 'success') {
-            //                        alert(response['msg']);
-            //                        window.location.reload();
-            //                    }
-            //                }
-            //            })
+            $.ajax({
+                type: "POST",
+                url: "/new",
+                data: {
+                    pjt_title: pjt_title, 
+                    start_date: start_date, 
+                    end_date: end_date,
+                    m_task: m_task,
+                    m_member: m_member
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                        window.location.reload();
+                    }
+                }
+            })
 
         }
 
         function get_tasks() {
-            $
+            let m_task_list=[];
+            let task_box = $("#task_box").children();
+            for (let i = 1; i <= task_box.length; i++) {
+                const task_list = $('#task_box tr:nth-child(' + i + ') td:nth-child(2)').text();
+                if (task_list) {
+                    m_task_list.push(task_list);
+                }
+            }
+            return m_task_list;
         }
 
 
