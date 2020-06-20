@@ -135,7 +135,7 @@
             let end_date = $('#end').val();
             let pjt_memo = $('#memo').val();
 
-            let s_task_list = get_s_tasks();
+            let s_tasks = get_s_tasks();
 
             if (pjt_title == '') {
                 alert('프로젝트를 선택해주세요!');
@@ -150,7 +150,7 @@
                     pjt_title: pjt_title,
                     start_date: start_date,
                     end_date: end_date,
-                    s_task_list: s_task_list,
+                    s_tasks: s_tasks,
                     pjt_memo: pjt_memo
                 },
                 success: function (response) {
@@ -163,7 +163,7 @@
         }
 
         function get_s_tasks() {
-            let s_task = [];
+            let s_task_list = [];
             let s_task_box = $("#s_task_box").children();
             for (let i = 1; i <= s_task_box.length; i++) {
                 const table_title = $(`#s_task_box tr:nth-child(${i}) td`)[1];
@@ -173,10 +173,10 @@
                 const table_mem = $(`#s_task_box tr:nth-child(${i}) td`)[5];
 
                 if (table_title, table_task, table_start, table_end, table_mem) {
-                    s_task.push(table_title, table_task, table_start, table_end, table_mem);
+                    s_task_list.push(table_title, table_task, table_start, table_end, table_mem);
                 }
             }
-            return s_task;
+            return s_task_list;
         }
 
 
