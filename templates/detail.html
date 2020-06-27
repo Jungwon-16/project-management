@@ -155,7 +155,7 @@
                     start_date: start_date,
                     end_date: end_date,
                     s_tasks: s_tasks,
-                    task_length: s_tasks.length, 
+                    task_length: s_tasks.length,
                     pjt_memo: pjt_memo
                 },
                 success: function (response) {
@@ -170,17 +170,17 @@
         function get_s_tasks() {
             let s_task_list = [];
             let s_task_box = $("#s_task_box").children();
-            for (let i = 2; i < s_task_box.length+1; i++) {
+            for (let i = 2; i < s_task_box.length + 1; i++) {
                 const table_title = $(`#s_task_box tr:nth-child(${i}) td`)[1].innerText;
                 const table_task = $(`#s_task_box tr:nth-child(${i}) td`)[2].innerText;
                 const table_start = $(`#s_task_box tr:nth-child(${i}) td`)[3].innerText;
                 const table_end = $(`#s_task_box tr:nth-child(${i}) td`)[4].innerText;
                 const table_mem = $(`#s_task_box tr:nth-child(${i}) td`)[5].innerText;
                 s_task_list.push({
-                    title: table_title, 
-                    desc: table_task, 
-                    start: table_start, 
-                    end: table_end, 
+                    title: table_title,
+                    desc: table_task,
+                    start: table_start,
+                    end: table_end,
                     member: table_mem
                 });
             }
