@@ -65,6 +65,9 @@
         }
 
         function select_btn() {
+            $("#pjt_period").empty();
+            $("#task").empty();
+
             let pjt_title = $('#title').val();
             const selected_pjt = get_pjt(pjt_title);
 
@@ -136,6 +139,7 @@
             let pjt_memo = $('#memo').val();
 
             let s_tasks = get_s_tasks();
+            console.log(s_tasks);
 
             if (pjt_title == '') {
                 alert('프로젝트를 선택해주세요!');
@@ -151,6 +155,7 @@
                     start_date: start_date,
                     end_date: end_date,
                     s_tasks: s_tasks,
+                    task_length: s_tasks.length, 
                     pjt_memo: pjt_memo
                 },
                 success: function (response) {
@@ -165,16 +170,19 @@
         function get_s_tasks() {
             let s_task_list = [];
             let s_task_box = $("#s_task_box").children();
-            for (let i = 1; i <= s_task_box.length; i++) {
-                const table_title = $(`#s_task_box tr:nth-child(${i}) td`)[1];
-                const table_task = $(`#s_task_box tr:nth-child(${i}) td`)[2];
-                const table_start = $(`#s_task_box tr:nth-child(${i}) td`)[3];
-                const table_end = $(`#s_task_box tr:nth-child(${i}) td`)[4];
-                const table_mem = $(`#s_task_box tr:nth-child(${i}) td`)[5];
-
-                if (table_title, table_task, table_start, table_end, table_mem) {
-                    s_task_list.push(table_title, table_task, table_start, table_end, table_mem);
-                }
+            for (let i = 2; i < s_task_box.length+1; i++) {
+                const table_title = $(`#s_task_box tr:nth-child(${i}) td`)[1].innerText;
+                const table_task = $(`#s_task_box tr:nth-child(${i}) td`)[2].innerText;
+                const table_start = $(`#s_task_box tr:nth-child(${i}) td`)[3].innerText;
+                const table_end = $(`#s_task_box tr:nth-child(${i}) td`)[4].innerText;
+                const table_mem = $(`#s_task_box tr:nth-child(${i}) td`)[5].innerText;
+                s_task_list.push({
+                    title: table_title, 
+                    desc: table_task, 
+                    start: table_start, 
+                    end: table_end, 
+                    member: table_mem
+                });
             }
             return s_task_list;
         }
@@ -249,6 +257,12 @@
                 <div class="form-group2" style="margin-top:50px">
                     <label for="formGroupExampleInput2">2. Project Period</label>
                     <div id="pjt_period" class="form-row">
+                        <div class="col">
+                            <type="text" id="start" class="form-control">시작일
+                        </div>
+                        <div class="col">
+                            <type="text" id="end" class="form-control">종료일
+                        </div>
                     </div>
                 </div>
                 <div class="form-group3" style="margin-top:50px">

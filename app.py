@@ -45,8 +45,23 @@ def s_pjt_list():
     pjt_title = request.form['pjt_title']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
-    s_task_list = request.form.getlist('s_task_list[]')
-    pjt_memo = request.form.getlist('pjt_memo')
+    s_task_length = request.form.get('task_length')
+    pjt_memo = request.form.get('pjt_memo')
+
+    s_task_list = []
+    for i in range(int(s_task_length)):
+        member = request.form.get(f"s_tasks[{i}]['member']")
+        title = request.form.get(f"s_tasks[{i}]['title']")
+        desc = request.form.get(f"s_tasks[{i}]['desc']")
+        start = request.form.get(f"s_tasks[{i}]['start']")
+        end = request.form.get(f"s_tasks[{i}]['end']")
+        s_task_list.push({
+            'member': member,
+            'title': title,
+            'desc': desc,
+            'start': start,
+            'end': end
+        })
 
     s_pjt = {
         'pjt_title': pjt_title,
